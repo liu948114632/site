@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base.iml" group="base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base_main.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base_main.iml" group="base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base_test.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base_test.iml" group="base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/front/front.iml" filepath="$PROJECT_DIR$/.idea/modules/front/front.iml" group="front" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/front/front_main.iml" filepath="$PROJECT_DIR$/.idea/modules/front/front_main.iml" group="front" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/front/front_test.iml" filepath="$PROJECT_DIR$/.idea/modules/front/front_test.iml" group="front" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mysite.iml" filepath="$PROJECT_DIR$/.idea/modules/mysite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mysite_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mysite_main.iml" group="mysite" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mysite_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mysite_test.iml" group="mysite" />
+    </modules>
+  </component>
+</project>

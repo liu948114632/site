@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/mysite?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    dbcp2:
+      min-idle: 5
+      max-wait-millis: 10000
+      max-idle: 50
+      initial-size: 5
+      validation-query: SELECT x
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: mysql
+server:
+  port: 1000
