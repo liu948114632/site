@@ -21,5 +21,3 @@ spring:
     password: hello
     port: 5672
     virtual-host: /
-server:
-  port: 1000

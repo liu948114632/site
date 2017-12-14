@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="base_main" target="1.8" />
       <module name="base_test" target="1.8" />
+      <module name="deal_main" target="1.8" />
+      <module name="deal_test" target="1.8" />
       <module name="front_main" target="1.8" />
       <module name="front_test" target="1.8" />
       <module name="mysite_main" target="1.8" />

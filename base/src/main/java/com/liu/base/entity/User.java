@@ -3,6 +3,7 @@ package com.liu.base.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,10 +14,11 @@ import java.util.Date;
  * Date： 2017/12/12
  */
 @Entity
+@Table
 public class User implements Serializable{
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     private String loginName;
     private String phone;
     private String email;
@@ -25,11 +27,11 @@ public class User implements Serializable{
     private Date createTime;
     private Date updateTime;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

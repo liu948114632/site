@@ -9,41 +9,43 @@ import java.util.Date;
 @Entity
 @Table(name = "coin")
 public class Coin implements java.io.Serializable {
+	public static Integer status_normal = 1;
+	public static Integer status_abnormal =0;
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private boolean FIsWithDraw;// 是否可以提现
 	private boolean FIsRecharge;// 是否可以充值
 	private String name;
 	private String ShortName;
 	private String description;
-	private int status;// VirtualCoinTypeStatusEnum
+	private Integer status;// VirtualCoIntegerypeStatusEnum
 	private String symbol;
 	private String accessKey;
 	private String secrtKey;
 	private String ip;
 	private String port;
 	@Version
-	private int version;
+	private Integer version;
 	private String url;
-	private double totalAmount;//总量
-	private double upDown;//日涨跌
-	private double upDownWeek;//周涨跌
-	private int homeOrder;	//首页次序
-	private int typeOrder; //板块次序
-	private int totalOrder; //所有币的排序，用于充币提币
-	private int confirmTimes;	// 充值确认次数
+	private Double totalAmount;//总量
+	private Double upDown;//日涨跌
+	private Double upDownWeek;//周涨跌
+	private Integer homeOrder;	//首页次序
+	private Integer typeOrder; //板块次序
+	private Integer totalOrder; //所有币的排序，用于充币提币
+	private Integer confirmTimes;	// 充值确认次数
 	private Date createTime;
 	private Date updateTime;
 
 	public Coin() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -87,11 +89,11 @@ public class Coin implements java.io.Serializable {
 		this.description = description;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -135,11 +137,11 @@ public class Coin implements java.io.Serializable {
 		this.port = port;
 	}
 
-	public int getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
 
-	public void setVersion(int version) {
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 
@@ -151,59 +153,59 @@ public class Coin implements java.io.Serializable {
 		this.url = url;
 	}
 
-	public double getTotalAmount() {
+	public Double getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(double totalAmount) {
+	public void setTotalAmount(Double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public double getUpDown() {
+	public Double getUpDown() {
 		return upDown;
 	}
 
-	public void setUpDown(double upDown) {
+	public void setUpDown(Double upDown) {
 		this.upDown = upDown;
 	}
 
-	public double getUpDownWeek() {
+	public Double getUpDownWeek() {
 		return upDownWeek;
 	}
 
-	public void setUpDownWeek(double upDownWeek) {
+	public void setUpDownWeek(Double upDownWeek) {
 		this.upDownWeek = upDownWeek;
 	}
 
-	public int getHomeOrder() {
+	public Integer getHomeOrder() {
 		return homeOrder;
 	}
 
-	public void setHomeOrder(int homeOrder) {
+	public void setHomeOrder(Integer homeOrder) {
 		this.homeOrder = homeOrder;
 	}
 
-	public int getTypeOrder() {
+	public Integer getTypeOrder() {
 		return typeOrder;
 	}
 
-	public void setTypeOrder(int typeOrder) {
+	public void setTypeOrder(Integer typeOrder) {
 		this.typeOrder = typeOrder;
 	}
 
-	public int getTotalOrder() {
+	public Integer getTotalOrder() {
 		return totalOrder;
 	}
 
-	public void setTotalOrder(int totalOrder) {
+	public void setTotalOrder(Integer totalOrder) {
 		this.totalOrder = totalOrder;
 	}
 
-	public int getConfirmTimes() {
+	public Integer getConfirmTimes() {
 		return confirmTimes;
 	}
 
-	public void setConfirmTimes(int confirmTimes) {
+	public void setConfirmTimes(Integer confirmTimes) {
 		this.confirmTimes = confirmTimes;
 	}
 

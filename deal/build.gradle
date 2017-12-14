@@ -17,7 +17,6 @@ apply plugin: 'org.springframework.boot'
 group = 'com.liu'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
-
 repositories {
 	mavenCentral()
 }
@@ -28,13 +27,11 @@ ext {
 }
 
 dependencies {
+//	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-amqp')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-//	compile('org.springframework.boot:spring-boot-starter-data-redis')
-	compile('org.springframework.boot:spring-boot-starter-websocket')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	compile project(':base')
 }
 
 dependencyManagement {

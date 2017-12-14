@@ -1,6 +1,6 @@
 package com.liu.base.entity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -10,19 +10,81 @@ import java.util.Date;
  * Date： 2017/12/12
  */
 @Entity
+@Table
 public class Wallet {
-    private int fid;
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @OneToOne
+    @JoinColumn(name = "coin_id")
     private Coin coin;
-    private double ftotal;
-    private double ffrozen;
-    private Date flastUpdateTime;
+    @Column(columnDefinition = "decimal(20,8)")
+    private Double total;
+    @Column(columnDefinition = "decimal(20,8)")
+    private Double frozen;
+    private Date updateTime;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user ;
-    private int version ;
+    @Version
+    private Integer version ;
 
-    private double fborrowBtc;//已借款
-    private double fHaveAppointBorrowBtc ;//已预约借款
+    public Wallet() {
+    }
 
-    private double fcanlendBtc;//可放款
-    private double ffrozenLendBtc;//冻结放款
-    private double falreadyLendBtc;//已放款
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Coin getCoin() {
+        return coin;
+    }
+
+    public void setCoin(Coin coin) {
+        this.coin = coin;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public double getFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(double frozen) {
+        this.frozen = frozen;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 }
