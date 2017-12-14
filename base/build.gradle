@@ -3,6 +3,8 @@ buildscript {
 		springBootVersion = '1.5.9.RELEASE'
 	}
 	repositories {
+		maven {url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+		mavenLocal()
 		mavenCentral()
 	}
 	dependencies {
@@ -28,7 +30,6 @@ ext {
 }
 
 dependencies {
-//	compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 //	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	runtime('mysql:mysql-connector-java')

@@ -1,7 +1,7 @@
 package com.liu.deal.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OrdersData implements Serializable, Comparable, Cloneable {
 
@@ -10,14 +10,14 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
 	private Double leftCount;  	// 未成交数量
 	private double amount;
 	private Double prize;      	// 成交价格
-    private Integer viFid;         // 货币ID
+    private Integer marketId;         // 市场id
     private Integer type;   // 0买 2 卖
     private Integer deep;			//深度
 	private int status;
 	private double successAmount;
 	private double count;
-	private Date createTime;
-	private Date updatTime;
+	private Timestamp createTime;
+	private Timestamp updatTime;
 	private double fees ;
 	private double leftfees;
 	private int walletId;			// 钱包ID
@@ -62,12 +62,12 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
 		this.prize = prize;
 	}
 
-	public Integer getViFid() {
-		return viFid;
+	public Integer getMarketId() {
+		return marketId;
 	}
 
-	public void setViFid(Integer viFid) {
-		this.viFid = viFid;
+	public void setMarketId(Integer marketId) {
+		this.marketId = marketId;
 	}
 
 	public Integer getType() {
@@ -110,19 +110,19 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
 		this.count = count;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public Date getUpdatTime() {
+	public Timestamp getUpdatTime() {
 		return updatTime;
 	}
 
-	public void setUpdatTime(Date updatTime) {
+	public void setUpdatTime(Timestamp updatTime) {
 		this.updatTime = updatTime;
 	}
 

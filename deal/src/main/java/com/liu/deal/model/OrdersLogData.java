@@ -1,12 +1,13 @@
 package com.liu.deal.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class OrdersLogData implements Serializable, Comparable {
 
     private int id;
-    private Date createTime;      // 成交时间
+    private Timestamp createTime;      // 成交时间
     private int type;           // 交易类型
     private int marketId;                 // 货币ID
     private double prize;              // 成交价
@@ -25,11 +26,11 @@ public class OrdersLogData implements Serializable, Comparable {
         this.id = id;
     }
 
-    public Date getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 

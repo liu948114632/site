@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base.iml" group="base" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base_main.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base_main.iml" group="base" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base_test.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base_test.iml" group="base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/deal.iml" filepath="$PROJECT_DIR$/.idea/modules/deal.iml" />
       <module fileurl="file://$PROJECT_DIR$/deal/deal.iml" filepath="$PROJECT_DIR$/deal/deal.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/deal_main.iml" filepath="$PROJECT_DIR$/.idea/modules/deal_main.iml" group="deal" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/deal_test.iml" filepath="$PROJECT_DIR$/.idea/modules/deal_test.iml" group="deal" />
