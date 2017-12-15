@@ -8,8 +8,10 @@ import com.liu.deal.utils.MathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +28,7 @@ public class DealServiceDB {
 
     private static final String CALL_DEAL_MARKING = "call dealMarking(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    boolean dealDB(final OrdersData buy, final OrdersData sell, OrdersLogData buyLog, OrdersLogData sellLog)  {
+    boolean dealDB(final OrdersData buy, final OrdersData sell, OrdersLogData ordersLogData)  {
         Connection connection = null;
         PreparedStatement call = null;
         try {
@@ -40,8 +42,8 @@ public class DealServiceDB {
                 return false;
             }
 
-            double sellFeeRate = 0d;
-            double buyFeeRate = 0d;
+            double sellFeeRate ;
+            double buyFeeRate ;
             sellFeeRate = getFfee(sell.getMarketId(), EntrustTypeEnum.SELL);
             buyFeeRate = getFfee(buy.getMarketId(), EntrustTypeEnum.BUY);
 
@@ -49,10 +51,10 @@ public class DealServiceDB {
 
             double buyLeftAmount = 0D;
 
-            double buyFee = MathUtils.multiply(buyLog.getCount(), buyFeeRate);
-            buy.setLeftCount(MathUtils.subtract(buy.getLeftCount(), buyLog.getCount()));
-            buy.setSuccessAmount(MathUtils.add(buy.getSuccessAmount(), buyLog.getAmount()));
-            buy.setUpdatTime(buyLog.getCreateTime());
+            double buyFee = MathUtils.multiply(ordersLogData.getCount(), buyFeeRate);
+            buy.setLeftCount(MathUtils.subtract(buy.getLeftCount(), ordersLogData.getCount()));
+            buy.setSuccessAmount(MathUtils.add(buy.getSuccessAmount(), ordersLogData.getAmount()));
+            buy.setUpdatTime(ordersLogData.getCreateTime());
             buy.setLeftfees(buy.getLeftfees() - buyFee);
             if (buy.getLeftCount() < 0.00000001F) {
                 buy.setStatus(EntrustStatusEnum.AllDeal);
@@ -61,11 +63,11 @@ public class DealServiceDB {
                 buy.setStatus(EntrustStatusEnum.PartDeal);
             }
 
-            double sellFee = sellLog.getCount() / sell.getCount() * sell.getFees();
-            sell.setLeftCount(MathUtils.subtract(sell.getLeftCount(), sellLog.getCount()));
-            sell.setSuccessAmount(MathUtils.add(sell.getSuccessAmount(), sellLog.getAmount()));
+            double sellFee = ordersLogData.getCount() / sell.getCount() * sell.getFees();
+            sell.setLeftCount(MathUtils.subtract(sell.getLeftCount(), ordersLogData.getCount()));
+            sell.setSuccessAmount(MathUtils.add(sell.getSuccessAmount(), ordersLogData.getAmount()));
             sell.setLeftfees(sell.getLeftfees() - sellFee);
-            sell.setUpdatTime(sellLog.getCreateTime());
+            sell.setUpdatTime(ordersLogData.getCreateTime());
             if (sell.getLeftCount() < 0.00000001F) {
                 sell.setStatus(EntrustStatusEnum.AllDeal);
                 sell.setLeftCount(0D);
@@ -79,34 +81,34 @@ public class DealServiceDB {
 
             int i = 0;
             // buy
-            call.setDouble(++i, buy.getSuccessAmount());
-            call.setDouble(++i, buy.getLeftCount());
-            call.setInt(++i, buy.getStatus());
-            call.setTimestamp(++i, buy.getUpdatTime());
-            call.setDouble(++i, buyFee);                    // 买入交易手续费
-            call.setInt(++i, buy.getId());
+            call.setDouble(++i, buy.getSuccessAmount());  //1
+            call.setDouble(++i, buy.getLeftCount());   //2
+            call.setInt(++i, buy.getStatus());  //3
+            call.setTimestamp(++i, buy.getUpdatTime());  //4
+            call.setDouble(++i, buyFee);                    // 买入交易手续费  5
+            call.setInt(++i, buy.getId());  //6
 
             // sell
-            call.setDouble(++i, sell.getSuccessAmount());
-            call.setDouble(++i, sell.getLeftCount());
-            call.setInt(++i, sell.getStatus());
-            call.setTimestamp(++i, sell.getUpdatTime());
-            call.setDouble(++i, sell.getLeftfees());
-            call.setInt(++i, sell.getId());
+            call.setDouble(++i, sell.getSuccessAmount()); //7
+            call.setDouble(++i, sell.getLeftCount());  //8
+            call.setInt(++i, sell.getStatus());   //9
+            call.setTimestamp(++i, sell.getUpdatTime());  //10
+            call.setDouble(++i, sell.getLeftfees());  //11
+            call.setInt(++i, sell.getId());  //12
 
             // log
-            call.setDouble(++i, buyLog.getAmount());
-            call.setDouble(++i, buyLog.getPrize());
-            call.setDouble(++i, buyLog.getCount());
-            call.setBoolean(++i, buyLog.isActive());
-            call.setBoolean(++i, sellLog.isActive());
-            call.setInt(++i, buyLog.getMarketId());
+            call.setDouble(++i, ordersLogData.getAmount());  //13
+            call.setDouble(++i, ordersLogData.getPrize());  //14
+            call.setDouble(++i, ordersLogData.getCount());  //15
+            call.setBoolean(++i, ordersLogData.isActive());  //16
+            call.setInt(++i, ordersLogData.getType());  //17
+            call.setInt(++i, ordersLogData.getMarketId());  //18
 
             // wallet
-            call.setInt(++i, buy.getUserId());
-            call.setInt(++i, sell.getUserId());
-            call.setDouble(++i, buyLeftAmount);
-            call.setDouble(++i, MathUtils.multiply(sellLog.getAmount(), MathUtils.subtract(1, sellFeeRate)));
+            call.setInt(++i, buy.getUserId()); //19
+            call.setInt(++i, sell.getUserId());  //20
+            call.setDouble(++i, buyLeftAmount);  //21
+            call.setDouble(++i, MathUtils.multiply(ordersLogData.getAmount(), MathUtils.subtract(1, sellFeeRate))); //22
 
             ResultSet rs = call.executeQuery();
             int[] ret = new int[7];
@@ -153,5 +155,11 @@ public class DealServiceDB {
 
     private double getFfee(int marketId, int type){
        return 0;
+    }
+
+    @PostConstruct
+    @Scheduled(cron = "0 0/1 * * * ? ")
+    public void syncMarkets(){
+
     }
 }

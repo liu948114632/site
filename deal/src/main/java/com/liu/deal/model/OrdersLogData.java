@@ -2,7 +2,6 @@ package com.liu.deal.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class OrdersLogData implements Serializable, Comparable {
 
@@ -13,7 +12,7 @@ public class OrdersLogData implements Serializable, Comparable {
     private double prize;              // 成交价
     private double count;              // 成交价
     private double amount;             // 成交额
-    private boolean isActive;
+    private boolean isActive;   //主动成交还是被动成交
 
     public OrdersLogData() {
     }

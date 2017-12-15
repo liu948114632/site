@@ -1,0 +1,5 @@
+IN `amount1` decimal(20,8),IN `count1` decimal(20,8),IN `status1` int,
+IN `time1` datetime,IN `fees1` decimal(20,8),IN `fid1` int,IN `amount2` decimal(20,8),IN `count2` decimal(20,8),
+IN `status2` int,IN `time2` datetime,IN `fees2` decimal(20,8),IN `fid2` int,IN `amount` decimal(20,8),IN `price` decimal(20,8),
+IN `count` decimal(20,8),IN `isactive1` int,IN `isactive2` int,IN `fvifid` int,IN `uid1` int,IN `uid2` int,
+IN `amount3` decimal(20,8),IN `amount4` decimal(20,8)
