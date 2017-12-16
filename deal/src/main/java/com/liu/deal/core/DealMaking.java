@@ -44,30 +44,18 @@ public class DealMaking {
         }
 
         Timestamp updateTime = new Timestamp(new Date().getTime());
-        //买单日志
-        OrdersLogData buyLog = new OrdersLogData();
-        buyLog.setAmount(MathUtils.multiply(successCount, successPrice));
-        buyLog.setPrize(successPrice);
-        buyLog.setCount(successCount);
-        buyLog.setCreateTime(updateTime);
-        buyLog.setActive(buyFentrust.getId() > sellFentrust.getId());
-        buyLog.setMarketId(markerId);
-        buyLog.setType(EntrustTypeEnum.BUY);
 
-        //卖单日志
-        OrdersLogData sellLog = new OrdersLogData();
-        sellLog.setAmount(MathUtils.multiply(successCount, successPrice));
-        sellLog.setCount(successCount);
-        sellLog.setPrize(successPrice);
-        sellLog.setCreateTime(updateTime);
-        sellLog.setActive(sellFentrust.getId() > buyFentrust.getId());
-        sellLog.setMarketId(markerId);
-        sellLog.setType(EntrustTypeEnum.SELL);
+        OrdersLogData logData = new OrdersLogData();
+        logData.setAmount(MathUtils.multiply(successCount, successPrice));
+        logData.setPrize(successPrice);
+        logData.setCount(successCount);
+        logData.setCreateTime(updateTime);
+        logData.setMarketId(markerId);
+        logData.setType(buyFentrust.getId() > sellFentrust.getId()?EntrustTypeEnum.BUY:EntrustTypeEnum.SELL);
+        logData.setBuyUserId(buyFentrust.getUserId());
+        logData.setSellUserId(sellFentrust.getUserId());
 
-        log.trace("updateDealMaking buy = {}, sell = {}, successPrice = {}, successCount = {}, buy active = {}, sell active = {}",
-                buyFentrust.getId(), sellFentrust.getId(), successPrice, successCount, buyLog.isActive(), sellLog.isActive());
-
-        boolean isSuccesss = dealServiceDB.dealDB(buyFentrust, sellFentrust, buyLog, sellLog);
+        boolean isSuccesss = dealServiceDB.dealDB(buyFentrust, sellFentrust, logData);
         // 如果不成功，返回成交量为0
         if (!isSuccesss) {
             log.error("update unsuccessful.");

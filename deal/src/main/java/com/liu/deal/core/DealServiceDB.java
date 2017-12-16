@@ -26,7 +26,7 @@ public class DealServiceDB {
 
     private static final String CALL_DEAL_MARKING = "call dealMarking(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    boolean dealDB(final OrdersData buy, final OrdersData sell, OrdersLogData buyLog, OrdersLogData sellLog)  {
+    boolean dealDB(final OrdersData buy, final OrdersData sell, OrdersLogData logData)  {
         Connection connection = null;
         PreparedStatement call = null;
         try {
@@ -49,10 +49,10 @@ public class DealServiceDB {
 
             double buyLeftAmount = 0D;
 
-            double buyFee = MathUtils.multiply(buyLog.getCount(), buyFeeRate);
-            buy.setLeftCount(MathUtils.subtract(buy.getLeftCount(), buyLog.getCount()));
-            buy.setSuccessAmount(MathUtils.add(buy.getSuccessAmount(), buyLog.getAmount()));
-            buy.setUpdatTime(buyLog.getCreateTime());
+            double buyFee = MathUtils.multiply(logData.getCount(), buyFeeRate);
+            buy.setLeftCount(MathUtils.subtract(buy.getLeftCount(), logData.getCount()));
+            buy.setSuccessAmount(MathUtils.add(buy.getSuccessAmount(), logData.getAmount()));
+            buy.setUpdatTime(logData.getCreateTime());
             buy.setLeftfees(buy.getLeftfees() - buyFee);
             if (buy.getLeftCount() < 0.00000001F) {
                 buy.setStatus(EntrustStatusEnum.AllDeal);
@@ -61,11 +61,11 @@ public class DealServiceDB {
                 buy.setStatus(EntrustStatusEnum.PartDeal);
             }
 
-            double sellFee = sellLog.getCount() / sell.getCount() * sell.getFees();
-            sell.setLeftCount(MathUtils.subtract(sell.getLeftCount(), sellLog.getCount()));
-            sell.setSuccessAmount(MathUtils.add(sell.getSuccessAmount(), sellLog.getAmount()));
+            double sellFee = logData.getCount() / sell.getCount() * sell.getFees();
+            sell.setLeftCount(MathUtils.subtract(sell.getLeftCount(), logData.getCount()));
+            sell.setSuccessAmount(MathUtils.add(sell.getSuccessAmount(), logData.getAmount()));
             sell.setLeftfees(sell.getLeftfees() - sellFee);
-            sell.setUpdatTime(sellLog.getCreateTime());
+            sell.setUpdatTime(logData.getCreateTime());
             if (sell.getLeftCount() < 0.00000001F) {
                 sell.setStatus(EntrustStatusEnum.AllDeal);
                 sell.setLeftCount(0D);
@@ -95,18 +95,18 @@ public class DealServiceDB {
             call.setInt(++i, sell.getId());
 
             // log
-            call.setDouble(++i, buyLog.getAmount());
-            call.setDouble(++i, buyLog.getPrize());
-            call.setDouble(++i, buyLog.getCount());
-            call.setBoolean(++i, buyLog.isActive());
-            call.setBoolean(++i, sellLog.isActive());
-            call.setInt(++i, buyLog.getMarketId());
+            call.setDouble(++i, logData.getAmount());
+            call.setDouble(++i, logData.getPrize());
+            call.setDouble(++i, logData.getCount());
+            call.setInt(++i, logData.getType());
+            call.setInt(++i, logData.getMarketId());
+
 
             // wallet
             call.setInt(++i, buy.getUserId());
             call.setInt(++i, sell.getUserId());
             call.setDouble(++i, buyLeftAmount);
-            call.setDouble(++i, MathUtils.multiply(sellLog.getAmount(), MathUtils.subtract(1, sellFeeRate)));
+            call.setDouble(++i, MathUtils.multiply(logData.getAmount(), MathUtils.subtract(1, sellFeeRate)));
 
             ResultSet rs = call.executeQuery();
             int[] ret = new int[7];

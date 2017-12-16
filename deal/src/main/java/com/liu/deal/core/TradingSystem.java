@@ -55,7 +55,7 @@ public class TradingSystem implements Runnable{
                     log.debug("购买价格小于出售价格，不成立，购买数据中", sellPrize, buyPrize);
                     break;
                 }
-                // 此时购买的价格比出售的价格高，应该撮合成功。则successCount>0
+                // 此时购买的价格比出售的价格高，应该撮合成功。则successCount>0   0表示买单
                 double successCount = dealMaking.deal(buy, sell, buy.getMarketId());
                 log.debug("updateDealMaking result successCount = {}, buy = {}, leftCount = {}, status = {}, sell = {}, leftCount = {}, status = {}",
                         successCount, buy.getId(), buy.getLeftCount(), buy.getStatus(), sell.getId(), sell.getLeftCount(), sell.getId());

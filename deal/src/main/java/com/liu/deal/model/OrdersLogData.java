@@ -8,13 +8,13 @@ public class OrdersLogData implements Serializable, Comparable {
 
     private int id;
     private Timestamp createTime;      // 成交时间
-    private int type;           // 交易类型
+    private int type;           // 交易类型 0买 表示卖单先下，被购买
     private int marketId;                 // 货币ID
     private double prize;              // 成交价
     private double count;              // 成交价
     private double amount;             // 成交额
-    private boolean isActive;
-
+    private int buyUserId;
+    private int sellUserId;
     public OrdersLogData() {
     }
 
@@ -74,12 +74,20 @@ public class OrdersLogData implements Serializable, Comparable {
         this.amount = amount;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public int getBuyUserId() {
+        return buyUserId;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setBuyUserId(int buyUserId) {
+        this.buyUserId = buyUserId;
+    }
+
+    public int getSellUserId() {
+        return sellUserId;
+    }
+
+    public void setSellUserId(int sellUserId) {
+        this.sellUserId = sellUserId;
     }
 
     @Override
@@ -109,7 +117,8 @@ public class OrdersLogData implements Serializable, Comparable {
                 ", prize=" + prize +
                 ", count=" + count +
                 ", amount=" + amount +
-                ", isActive=" + isActive +
+                ", buyUserId=" + buyUserId +
+                ", sellUserId=" + sellUserId +
                 '}';
     }
 }

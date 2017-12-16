@@ -15,8 +15,11 @@ public class OrdersLog {
     @GeneratedValue
     private int id;
     @ManyToOne
-    @JoinColumn(name = "orders_id")
-    private Orders orders;
+    @JoinColumn(name = "buy_user_id")
+    private User buyUser;
+    @ManyToOne
+    @JoinColumn(name = "sell_user_id")
+    private User sellUser;
     @Column(columnDefinition = "decimal(20,8)", nullable = false)
     private Double amount;
     @Column(columnDefinition = "decimal(20,8)", nullable = false)
@@ -41,12 +44,20 @@ public class OrdersLog {
         this.id = id;
     }
 
-    public Orders getOrders() {
-        return orders;
+    public User getBuyUser() {
+        return buyUser;
     }
 
-    public void setOrders(Orders orders) {
-        this.orders = orders;
+    public void setBuyUser(User buyUser) {
+        this.buyUser = buyUser;
+    }
+
+    public User getSellUser() {
+        return sellUser;
+    }
+
+    public void setSellUser(User sellUser) {
+        this.sellUser = sellUser;
     }
 
     public Double getAmount() {
