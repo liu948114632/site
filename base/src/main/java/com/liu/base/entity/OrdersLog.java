@@ -32,6 +32,8 @@ public class OrdersLog {
     @JoinColumn(name = "market_id")
     private Market market;
     private Date createTime;
+    private Boolean isActive;
+    private Integer type;
 
     public OrdersLog() {
     }
@@ -106,5 +108,21 @@ public class OrdersLog {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
