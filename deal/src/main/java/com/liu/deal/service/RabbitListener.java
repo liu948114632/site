@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutorService;
  * Date： 2017/12/13
  */
 @Component
-@org.springframework.amqp.rabbit.annotation.RabbitListener(queues = "hello")
+@org.springframework.amqp.rabbit.annotation.RabbitListener(queues = "orders.*")
 public class RabbitListener {
     private final Logger log = LoggerFactory.getLogger(RabbitListener.class);
 

@@ -1,4 +1,4 @@
-package com.liu.deal.model;
+package com.liu.base.entity;
 
 
 import java.io.Serializable;

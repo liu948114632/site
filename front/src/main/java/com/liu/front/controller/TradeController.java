@@ -5,6 +5,7 @@ import com.liu.base.entity.Orders;
 import com.liu.base.entity.User;
 import com.liu.front.service.MarketCache;
 import com.liu.front.service.RabbitService;
+import com.liu.front.service.SendRabbitMessage;
 import com.liu.front.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +26,21 @@ import java.util.Map;
 public class TradeController extends BaseController{
 
     @Autowired
-    private RabbitService rabbitService;
+    SendRabbitMessage sendRabbitMessage;
+
     @Autowired
     private MarketCache marketCache;
 
     @Autowired
     private TradeService tradeService;
+
+    @Autowired
+    RabbitService rabbitService;
+
     @GetMapping("/send")
     public void send(){
-        rabbitService.publish("hello","你好");
+        rabbitService.publish("orders.queue","你好");
+        rabbitService.publish("orders.queue1","1312313");
     }
 
     @PostMapping("/buySubmit")
@@ -46,6 +53,7 @@ public class TradeController extends BaseController{
         }
         try {
             Orders orders = tradeService.buySubmit(user, market, count,price);
+            sendRabbitMessage.sendOrdersToRabbit(orders);
             return result(200, "ok",null);
         }catch (Exception e){
             e.printStackTrace();
@@ -63,6 +71,7 @@ public class TradeController extends BaseController{
         }
         try {
             Orders orders = tradeService.sellSubmit(user, market, count,price);
+            sendRabbitMessage.sendOrdersToRabbit(orders);
             return result(200, "ok",null);
         }catch (Exception e){
             e.printStackTrace();

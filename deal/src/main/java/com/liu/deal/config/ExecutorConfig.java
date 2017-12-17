@@ -11,10 +11,7 @@ import java.util.concurrent.Executors;
 @Component
 public class ExecutorConfig {
     @Autowired
-    JdbcTemplate jdbcTemplate;
-
-    ExecutorConfig(){
-    }
+    private  JdbcTemplate jdbcTemplate;
 
     @Bean
     public ExecutorService getPool(){

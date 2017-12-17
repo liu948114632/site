@@ -18,8 +18,12 @@ import java.util.Date;
 @Service
 public class DealMaking {
     private Logger log = LoggerFactory.getLogger(getClass());
+    private final DealServiceDB dealServiceDB;
+
     @Autowired
-    private DealServiceDB dealServiceDB;
+    public DealMaking(DealServiceDB dealServiceDB) {
+        this.dealServiceDB = dealServiceDB;
+    }
 
     public double deal(OrdersData _buyFentrust, OrdersData _sellFentrust, Integer markerId){
 

@@ -36,6 +36,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile "com.alibaba:fastjson:1.2.8"
 	compile project(':base')
 }
 
