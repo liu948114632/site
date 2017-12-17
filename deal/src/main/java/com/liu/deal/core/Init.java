@@ -31,7 +31,7 @@ public class Init {
         //获取数据库中所有未成交记录
         List<OrdersData> list = loadOrders();
         for(OrdersData ordersData: list){
-            rabbitListener.subscribe(ordersData);
+//            rabbitListener.subscribe(ordersData);
         }
         log.info("初始化挂单表成功");
     }
