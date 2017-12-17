@@ -21,7 +21,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 /**
  * 撮合过程
  */
-@Service
+//@Service
 public class TradingSystem implements Runnable{
     private Logger log = LoggerFactory.getLogger(getClass());
     //这里存放的是所有的挂单信息，其中key是市场id，就是marketId
@@ -118,6 +118,10 @@ public class TradingSystem implements Runnable{
         addToSortedSet(sellOrders, sell);
     }
 
+    public OrdersData getOrders(int id){
+        return ordersMap.get(id);
+    }
+
 //    private boolean updateOrders(OrdersData sell, OrdersData buy, double successCount) {
 //        //撮合成功一笔，更新深度，返回true，继续撮合
 //        if (successCount > 0) {
@@ -166,7 +170,7 @@ public class TradingSystem implements Runnable{
 //    }
 
     //将rabbit监听到的挂单信息加入到阻塞队列和所有的挂单信息中
-    private void addOrsersIntoQueue(OrdersData ordersData) {
+    public void addOrsersIntoQueue(OrdersData ordersData) {
         OrdersData exists = ordersMap.put(ordersData.getId(), ordersData);
         // 如果还没进到队列，就已经被取消，则不再进队列
         if (exists != null && exists.getStatus() == EntrustStatusEnum.Cancel) {
@@ -220,12 +224,46 @@ public class TradingSystem implements Runnable{
         }
     }
 
+    public void cancelOrders(OrdersData ordersData) {
+        OrdersData data = ordersMap.get(ordersData.getId());
+        if (data != null) {
+            log.info("cancelOrders already existing entrust fid {}", ordersData.getId());
+
+            data.setStatus(EntrustStatusEnum.Cancel);
+            ordersMap.remove(data.getId());
+            if (ordersData.getType() == EntrustTypeEnum.BUY) {
+                removeOrders(this.buyOrders, data);
+            } else {
+                removeOrders(this.sellOrders, data);
+            }
+        } else {
+            log.info("cancelEntrust not existing entrust fid {}", ordersData.getId());
+            ordersMap.put(ordersData.getId(), ordersData);
+        }
+        updateMarking(ordersData.getMarketId(), 0);
+    }
+
+    private void removeOrders(Map<Integer, SortedSet<OrdersData>> map, OrdersData data) {
+        // 极端情况下
+        // 即用户已经下了一个订单
+        // 这个时候重启了撮合引擎，然后用户又取消了订单，这个时候队列里面有一条消息
+        // 或者引擎启动完成，并受到这条消息，发现这条消息不在挂单列表里面，而这个时候又没有任何有效的挂单
+        // 此时的挂单列表会为空，需要创建一个，否则，直接使用会出现空指针
+        SortedSet<OrdersData> set = map.get(data.getMarketId());
+        if (set != null) {
+            set.remove(data);
+        } else {
+            buildSet(map, data.getMarketId(), data.getType());
+        }
+    }
+
     //线程异步调用
     @Override
     public void run() {
         while (flag) {
             try {
                 OrdersData orders = entrustQueue.take();
+                log.info("获取对队列数据"+orders.getId()+"队列大小："+entrustQueue.size());
                 if (orders.getType() == EntrustTypeEnum.BUY) {
                     matchBuy(orders);
                 } else {

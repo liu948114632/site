@@ -1,11 +1,15 @@
 package com.liu.deal.model;
 
+import org.springframework.jdbc.core.RowMapper;
+
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class OrdersData implements Serializable, Comparable, Cloneable {
+public class OrdersData implements Serializable, Comparable, Cloneable ,RowMapper<OrdersData>{
 
-	private int userId;
+	private Integer userId;
     private Integer id;            // 委托单ID
 	private Double leftCount;  	// 未成交数量
 	private double amount;
@@ -13,20 +17,20 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
     private Integer marketId;         // 市场id
     private Integer type;   // 0买 2 卖
     private Integer deep;			//深度
-	private int status;
-	private double successAmount;
-	private double count;
+	private Integer status;
+	private Double successAmount;
+	private Double count;
 	private Timestamp createTime;
-	private Timestamp updatTime;
-	private double fees ;
-	private double leftfees;
-	private int walletId;			// 钱包ID
+	private Timestamp updateTime;
+	private Double fees ;
+	private Double leftfees;
+	private Integer walletId;			// 钱包ID
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -86,27 +90,27 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
 		this.deep = deep;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public double getSuccessAmount() {
+	public Double getSuccessAmount() {
 		return successAmount;
 	}
 
-	public void setSuccessAmount(double successAmount) {
+	public void setSuccessAmount(Double successAmount) {
 		this.successAmount = successAmount;
 	}
 
-	public double getCount() {
+	public Double getCount() {
 		return count;
 	}
 
-	public void setCount(double count) {
+	public void setCount(Double count) {
 		this.count = count;
 	}
 
@@ -118,38 +122,37 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdatTime() {
-		return updatTime;
+	public Timestamp getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setUpdatTime(Timestamp updatTime) {
-		this.updatTime = updatTime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
-	public double getFees() {
+	public Double getFees() {
 		return fees;
 	}
 
-	public void setFees(double fees) {
+	public void setFees(Double fees) {
 		this.fees = fees;
 	}
 
-	public double getLeftfees() {
+	public Double getLeftfees() {
 		return leftfees;
 	}
 
-	public void setLeftfees(double leftfees) {
+	public void setLeftfees(Double leftfees) {
 		this.leftfees = leftfees;
 	}
 
-	public int getWalletId() {
+	public Integer getWalletId() {
 		return walletId;
 	}
 
-	public void setWalletId(int walletId) {
+	public void setWalletId(Integer walletId) {
 		this.walletId = walletId;
 	}
-
 	@Override
 	public OrdersData clone() {
 		try {
@@ -179,4 +182,12 @@ public class OrdersData implements Serializable, Comparable, Cloneable {
         return ret;
     }
 
+	@Override
+	public OrdersData mapRow(ResultSet rs, int rowNum) throws SQLException {
+		OrdersData ordersData = new OrdersData();
+		ordersData.setAmount(rs.getDouble("amount"));
+		ordersData.setPrize(rs.getDouble("prize"));
+		ordersData.setLeftCount(rs.getDouble("left_count"));
+		return ordersData;
+	}
 }

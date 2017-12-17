@@ -14,14 +14,14 @@ BEGIN
 
 		set @p_buy_id = 0;
 		set @p_sell_id = 0;
-		select buy_id, sell_id INTO @p_buy_id, @p_sell_id FROM market WHERE id = fvifid;
+		select buy_id, sell_id INTO @p_buy_id, @p_sell_id FROM market WHERE id = marketId;
 
     update orders set success_amount = amount1, left_count = count1, status = status1, update_time = time1, version = version + 1, leftfees = leftfees - @buy_fee where fId = fid1 AND status <> 4 AND status <> 3;
 		set @up1 = ROW_COUNT();
 		update orders set success_amount = amount2, left_count = count2, status = status2, update_time = time2, version = version + 1, leftfees = leftfees - @trade_fee where fId = fid2 AND status <> 4 AND status <> 3;
 		set @up2 = ROW_COUNT();
 
-		insert into oeders_log (orders_id, amount, create_time, prize, count, is_active, market_id, type, version, fees) values (fid1,amount,time1,price,count,isactive1,fvifid,isactive2,0,@buy_fee);
+		insert into oeders_log (amount, create_time, prize, count, market_id, type, version, buy_fees, sell_fees, buy_ser_id, sell_user_id) values (amount,time1,price,count,marketId,type,0,@buy_fee, @trade_fee,uid1,uid2);
 		set @up3 = ROW_COUNT();
 
     update wallet set total = total + amount3, frozen = frozen - amount - amount3, update_time = time1, version = version + 1 where user_id = uid1 and coin_id = @p_buy_id and frozen + 0.00002 >= amount + amount3;

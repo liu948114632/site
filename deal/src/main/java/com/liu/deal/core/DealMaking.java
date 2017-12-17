@@ -70,13 +70,13 @@ public class DealMaking {
             _buyFentrust.setSuccessAmount(buyFentrust.getSuccessAmount());
             _buyFentrust.setLeftfees(buyFentrust.getLeftfees());
             _buyFentrust.setStatus(buyFentrust.getStatus());
-            _buyFentrust.setUpdatTime(buyFentrust.getUpdatTime());
+            _buyFentrust.setUpdateTime(buyFentrust.getUpdateTime());
 
             _sellFentrust.setLeftCount(sellFentrust.getLeftCount());
             _sellFentrust.setSuccessAmount(sellFentrust.getSuccessAmount());
             _sellFentrust.setLeftfees(sellFentrust.getLeftfees());
             _sellFentrust.setStatus(sellFentrust.getStatus());
-            _sellFentrust.setUpdatTime(sellFentrust.getUpdatTime());
+            _sellFentrust.setUpdateTime(sellFentrust.getUpdateTime());
         }
         return successCount;
     }

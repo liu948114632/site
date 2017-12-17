@@ -16,13 +16,13 @@ public class Orders {
     @GeneratedValue
     private Integer id;
     @OneToOne
-    @JoinColumn(name = "market")
+    @JoinColumn(name = "market_id")
     private Market market;
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private User user;
     private Date createTime;
-    private Date lastUpdatTime;
+    private Date lastUpdateTime;
     @Column(length = 4)
     private Integer type;// 0 买 1 卖
     @Column(columnDefinition = "decimal(20,8)")
@@ -81,11 +81,11 @@ public class Orders {
     }
 
     public Date getLastUpdatTime() {
-        return lastUpdatTime;
+        return lastUpdateTime;
     }
 
     public void setLastUpdatTime(Date lastUpdatTime) {
-        this.lastUpdatTime = lastUpdatTime;
+        this.lastUpdateTime = lastUpdatTime;
     }
 
     public Integer getType() {

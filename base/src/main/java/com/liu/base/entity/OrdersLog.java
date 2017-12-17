@@ -32,8 +32,11 @@ public class OrdersLog {
     @JoinColumn(name = "market_id")
     private Market market;
     private Date createTime;
-    private Boolean isActive;
     private Integer type;
+    @Column(columnDefinition = "decimal(20,8)", nullable = false)
+    private Double buyFees;
+    @Column(columnDefinition = "decimal(20,8)", nullable = false)
+    private Double sellFees;
 
     public OrdersLog() {
     }
@@ -110,13 +113,6 @@ public class OrdersLog {
         this.createTime = createTime;
     }
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
 
     public Integer getType() {
         return type;
@@ -124,5 +120,21 @@ public class OrdersLog {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Double getBuyFees() {
+        return buyFees;
+    }
+
+    public void setBuyFees(Double buyFees) {
+        this.buyFees = buyFees;
+    }
+
+    public Double getSellFees() {
+        return sellFees;
+    }
+
+    public void setSellFees(Double sellFees) {
+        this.sellFees = sellFees;
     }
 }
