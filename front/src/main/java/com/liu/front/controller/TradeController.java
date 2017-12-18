@@ -39,8 +39,8 @@ public class TradeController extends BaseController{
 
     @GetMapping("/send")
     public void send(){
-        rabbitService.publish("orders.queue","你好");
-        rabbitService.publish("orders.queue1","1312313");
+        rabbitService.publish1("orders.queue","你好");
+        rabbitService.publish1("orders.queue1","1312313");
     }
 
     @PostMapping("/buySubmit")

@@ -1,6 +1,5 @@
 package com.liu.front.service;
 
-import com.alibaba.fastjson.JSON;
 import com.liu.base.entity.Orders;
 import com.liu.base.entity.OrdersData;
 import com.liu.front.utils.Keys;
@@ -28,6 +27,6 @@ public class SendRabbitMessage {
         ordersData.setPrize(orders.getPrize());
         ordersData.setType(orders.getType());
         ordersData.setMarketId(orders.getMarket().getId());
-        rabbitService.publish(Keys.orders_queue+orders.getMarket().getId(), JSON.toJSONString(ordersData));
+        rabbitService.publish(Keys.orders_queue+orders.getMarket().getId(), ordersData);
     }
 }

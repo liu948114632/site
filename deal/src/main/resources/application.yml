@@ -21,3 +21,6 @@ spring:
     password: hello
     port: 5672
     virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto

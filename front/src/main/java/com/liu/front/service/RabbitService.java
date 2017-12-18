@@ -1,5 +1,6 @@
 package com.liu.front.service;
 
+import com.liu.base.entity.OrdersData;
 import com.liu.front.utils.Keys;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,10 @@ public class RabbitService {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    public void publish(String route, String msg){
+    public void publish(String route, OrdersData ordersData){
+        rabbitTemplate.convertAndSend(Keys.queue_exchange,route, ordersData);
+    }
+    public void publish1(String route, String msg){
         rabbitTemplate.convertAndSend(Keys.queue_exchange,route, msg);
     }
 }
