@@ -18,8 +18,8 @@ import java.util.List;
  * Date： 2017/12/13
  */
 @Component
-public class MarketCache {
-    static Logger logger = Logger.getLogger(MarketCache.class);
+public class MarketAndCoinCache {
+    static Logger logger = Logger.getLogger(MarketAndCoinCache.class);
 
     @Autowired
     private MarketDao marketDao;
@@ -53,6 +53,10 @@ public class MarketCache {
             }
         }
         return null;
+    }
+
+    public List<Coin> getCoins(){
+        return this.coins;
     }
 
     @PostConstruct

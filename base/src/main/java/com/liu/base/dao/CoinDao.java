@@ -15,4 +15,6 @@ import java.util.List;
 @Repository
 public interface CoinDao extends JpaRepository<Coin, Integer>{
     List<Coin> findByStatus(int i);
+
+    list<Coin> findByu
 }

@@ -22,7 +22,7 @@ import java.util.Date;
  */
 @Service
 public class TradeService {
-    static Logger logger = Logger.getLogger(MarketCache.class);
+    static Logger logger = Logger.getLogger(MarketAndCoinCache.class);
     @Autowired
     WalletDao walletDao;
 

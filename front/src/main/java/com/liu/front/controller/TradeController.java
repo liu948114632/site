@@ -3,7 +3,7 @@ package com.liu.front.controller;
 import com.liu.base.entity.Market;
 import com.liu.base.entity.Orders;
 import com.liu.base.entity.User;
-import com.liu.front.service.MarketCache;
+import com.liu.front.service.MarketAndCoinCache;
 import com.liu.front.service.RabbitService;
 import com.liu.front.service.SendRabbitMessage;
 import com.liu.front.service.TradeService;
@@ -29,7 +29,7 @@ public class TradeController extends BaseController{
     SendRabbitMessage sendRabbitMessage;
 
     @Autowired
-    private MarketCache marketCache;
+    private MarketAndCoinCache marketAndCoinCache;
 
     @Autowired
     private TradeService tradeService;
@@ -46,7 +46,7 @@ public class TradeController extends BaseController{
     @PostMapping("/buySubmit")
     public Object buySubmit(int marketId, double count, double price, String tradePassword){
         User user = getUser();
-        Market market = marketCache.getMarketById(marketId);
+        Market market = marketAndCoinCache.getMarketById(marketId);
         Map result = checkCanTrade(user,tradePassword,market,count,price);
         if(result!=null){
             return result;
@@ -64,7 +64,7 @@ public class TradeController extends BaseController{
     @PostMapping("/sellSubmit")
     public Object sellSubmit(int marketId, double count, double price, String tradePassword){
         User user = getUser();
-        Market market = marketCache.getMarketById(marketId);
+        Market market = marketAndCoinCache.getMarketById(marketId);
         Map result = checkCanTrade(user,tradePassword,market,count,price);
         if(result!=null){
             return result;

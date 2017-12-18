@@ -14,15 +14,15 @@ public class Coin implements java.io.Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private boolean FIsWithDraw;// 是否可以提现
-	private boolean FIsRecharge;// 是否可以充值
+	private boolean isWithDraw;// 是否可以提现
+	private boolean isRecharge;// 是否可以充值
 	private String name;
-	private String ShortName;
+	private String shortName;
 	private String description;
 	private Integer status;// VirtualCoIntegerypeStatusEnum
 	private String symbol;
 	private String accessKey;
-	private String secrtKey;
+	private String secretKey;
 	private String ip;
 	private String port;
 	@Version
@@ -49,22 +49,6 @@ public class Coin implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public boolean isFIsWithDraw() {
-		return FIsWithDraw;
-	}
-
-	public void setFIsWithDraw(boolean FIsWithDraw) {
-		this.FIsWithDraw = FIsWithDraw;
-	}
-
-	public boolean isFIsRecharge() {
-		return FIsRecharge;
-	}
-
-	public void setFIsRecharge(boolean FIsRecharge) {
-		this.FIsRecharge = FIsRecharge;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -73,12 +57,36 @@ public class Coin implements java.io.Serializable {
 		this.name = name;
 	}
 
+	public boolean isWithDraw() {
+		return isWithDraw;
+	}
+
+	public void setWithDraw(boolean withDraw) {
+		isWithDraw = withDraw;
+	}
+
+	public boolean isRecharge() {
+		return isRecharge;
+	}
+
+	public void setRecharge(boolean recharge) {
+		isRecharge = recharge;
+	}
+
 	public String getShortName() {
-		return ShortName;
+		return shortName;
 	}
 
 	public void setShortName(String shortName) {
-		ShortName = shortName;
+		this.shortName = shortName;
+	}
+
+	public String getSecretKey() {
+		return secretKey;
+	}
+
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
 	}
 
 	public String getDescription() {
@@ -111,14 +119,6 @@ public class Coin implements java.io.Serializable {
 
 	public void setAccessKey(String accessKey) {
 		this.accessKey = accessKey;
-	}
-
-	public String getSecrtKey() {
-		return secrtKey;
-	}
-
-	public void setSecrtKey(String secrtKey) {
-		this.secrtKey = secrtKey;
 	}
 
 	public String getIp() {
