@@ -1,7 +1,7 @@
 package com.liu.deal.core;
 
 import com.liu.deal.model.OrdersData;
-import com.liu.deal.service.RabbitListener;
+import com.liu.deal.service.MyRabbitListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +24,14 @@ public class Init {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    RabbitListener rabbitListener;
+    MyRabbitListener rabbitListener;
 
     @PostConstruct
     public void InitData(){
         //获取数据库中所有未成交记录
         List<OrdersData> list = loadOrders();
         for(OrdersData ordersData: list){
-//            rabbitListener.subscribe(ordersData);
+            rabbitListener.sub(ordersData);
         }
         log.info("初始化挂单表成功");
     }

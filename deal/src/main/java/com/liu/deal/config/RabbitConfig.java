@@ -29,9 +29,8 @@ public class RabbitConfig {
 
     //配置交换机的路由方式  以orders 开头的都 接受。 绑定队列，是通过hello  来传送的
     @Bean
-    Binding bindingQueue1(Queue queue, TopicExchange exchange) {
+    Binding bindingQueue(Queue queue, TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with("orders.*");//*表示一个词,#表示零个或多个词
     }
-
 
 }

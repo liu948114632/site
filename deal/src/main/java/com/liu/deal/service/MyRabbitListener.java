@@ -38,15 +38,15 @@ public class MyRabbitListener {
     RabbitTemplate rabbitTemplate;
 
     //配置多个接收消息的类。可以并发处理
-    @RabbitListener(queues = "orders_queue")
+    @RabbitListener(queues = {"orders_queue"})
     public  void  sub(OrdersData ordersData){
         subscribe(ordersData);
-        log.info("我是sub接收的："+ordersData);
+//        log.info("我是sub接收的："+ordersData);
     }
     @RabbitListener(queues = "orders_queue")
     public  void  sub1(OrdersData ordersData){
         subscribe(ordersData);
-        log.info("我是sub1接收的："+ordersData);
+//        log.info("我是sub1接收的："+ordersData);
     }
 
     private void subscribe(OrdersData message){
