@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface VirtualOperationDao extends JpaRepository<VirtualOperation, Integer> {
-    List<VirtualOperation> findByUserAndCoinaAndType(User user, Coin coin, int type);
+    List<VirtualOperation> findByUserAndCoinAndType(User user, Coin coin, int type);
  }

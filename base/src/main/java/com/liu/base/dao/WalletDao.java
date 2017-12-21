@@ -1,5 +1,6 @@
 package com.liu.base.dao;
 
+import com.liu.base.entity.Coin;
 import com.liu.base.entity.User;
 import com.liu.base.entity.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,6 @@ public interface WalletDao extends JpaRepository<Wallet, Integer>{
     int sellSubmit(double total, int userId, int coinId);
 
     List<Wallet> findByUser(User user);
+
+    Wallet findByCoinAndUser(Coin coin, User user);
 }

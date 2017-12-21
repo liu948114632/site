@@ -16,6 +16,10 @@ public class Coin implements java.io.Serializable {
 	private Integer id;
 	private boolean isWithDraw;// 是否可以提现
 	private boolean isRecharge;// 是否可以充值
+	@Column(columnDefinition = "decimal(20,8)")
+	private Double withdrawRate;  //提现手续费
+	@Column(columnDefinition = "decimal(20,8)")
+	private Double chargeRate;
 	private String name;
 	private String shortName;
 	private String description;
@@ -71,6 +75,22 @@ public class Coin implements java.io.Serializable {
 
 	public void setRecharge(boolean recharge) {
 		isRecharge = recharge;
+	}
+
+	public Double getWithdrawRate() {
+		return withdrawRate;
+	}
+
+	public void setWithdrawRate(Double withdrawRate) {
+		this.withdrawRate = withdrawRate;
+	}
+
+	public Double getChargeRate() {
+		return chargeRate;
+	}
+
+	public void setChargeRate(Double chargeRate) {
+		this.chargeRate = chargeRate;
 	}
 
 	public String getShortName() {

@@ -1,6 +1,8 @@
 package com.liu.front.controller;
 
 import com.liu.base.entity.*;
+import com.liu.base.service.WalletService;
+import com.liu.base.utils.VirtualOperationTypeEnum;
 import com.liu.front.service.AssetService;
 import com.liu.front.service.MarketAndCoinCache;
 import com.liu.front.utils.Keys;
@@ -22,6 +24,9 @@ public class AssetController extends BaseController{
 
     @Autowired
     MarketAndCoinCache marketAndCoinCache;
+
+    @Autowired
+    WalletService walletService;
 
     @RequestMapping("/account")
     public Object getAccount(){
@@ -54,7 +59,7 @@ public class AssetController extends BaseController{
 
         String address = assetService.getInAddress(user.getId(), coinId);
 
-        List<VirtualOperation> operations = assetService.getVirtualOperation(user, coin, 1);
+        List<VirtualOperation> operations = assetService.getVirtualOperation(user, coin, VirtualOperationTypeEnum.COIN_IN);
 
         Map<String ,Object> map = new HashMap<>();
         map.put("coins", coins);
@@ -84,7 +89,7 @@ public class AssetController extends BaseController{
             return result(1, "没有该币种", coins);
         }
 
-        List<VirtualOperation> operations = assetService.getVirtualOperation(user, coin, 2);
+        List<VirtualOperation> operations = assetService.getVirtualOperation(user, coin, VirtualOperationTypeEnum.COIN_OUT);
         return result(200, "ok", operations);
     }
 
@@ -126,7 +131,7 @@ public class AssetController extends BaseController{
      * @return
      */
     @RequestMapping("/applyWithdraw")
-    public Object applyWithdraw(String address, int coinId, String code, HttpSession session){
+    public Object applyWithdraw(String address, int coinId, String code, HttpSession session, double amount){
         String realCode = (String)session.getAttribute(Keys.phone_code);
 
         if (realCode == null){
@@ -143,8 +148,22 @@ public class AssetController extends BaseController{
         if(outAddress == null){
             return result(4,"提现地址不正确！" ,null);
         }
-        //申请提现
+        Coin coin = marketAndCoinCache.getCoinById(coinId);
+        if(coin == null){
+            return result(5, "没有该币种", null);
+        }
+        if(!coin.isWithDraw()){
+            return result(6, "禁止提现", null);
+        }
 
-        return null;
+        //申请提现
+        Wallet wallet = walletService.findByUserAndCoin(getUser(), coin);
+        if(wallet.getTotal() < amount){
+            return result(7, "余额不足", null);
+        }
+
+        assetService.addOutOperate(address, coin, getUser(),amount);
+
+        return result(200, "申请提现成功", null);
     }
 }
